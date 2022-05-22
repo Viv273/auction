@@ -1,0 +1,80 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Auction {{auction.id}}</h2>
+    {% if auction.image %}
+        <div class="image">
+        <img src="{{ MEDIA_URL }}{{auction.image.url}}" alt="image good" class="photo">
+        </div>
+    {% else %}
+        <br><br>
+        <span>No image</span>
+        <br><br>
+    {% endif %}
+
+
+    <ul>
+        <li>Name good: {{auction.name_good}}</li>
+        <li>Description: {{auction.description}}</li>
+        <li>Categories: {{auction.categories}}</li>
+        <li>Status: {{auction.status}}</li>
+        <li>Created by: {{auction.user}}</li>
+        <li>Price: {{auction.price}}</li>
+        <li>Last bit: {% if bitmax %} {{bitmax}} {% endif %} </li>
+    </ul>
+
+    <a href="{% url 'add_watchlist' auction.id %}"> {{message}} </a>
+    <br>
+
+    {% if message_winner  %}
+    {{message_winner}}
+    {%endif%}
+    <br><br>
+
+    {% if message_close is not None %}
+    {{message_close}}  
+    <form action="{% url 'auction_close' auction.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form_auction.status}}
+        </div>
+        
+        <input class="btn btn-primary" type="submit" value="Save">
+    </form>
+    {% endif %}
+
+    <br>
+
+    {% if form %}
+    <form action="{% url 'add_bit' auction.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form}}
+        </div>
+        <p>{{message_bit|safe}}  {% if bmax %} {{bmax}} {% endif %}</p> 
+
+        <input class="btn btn-primary" type="submit" value="Save">
+    </form>
+    {% endif %}
+
+    <span> Last comments: </span>
+    {% for auctioncomment in auctioncomments %}
+   
+    <ul>
+        <li>author {{auctioncomment.user}}: {{auctioncomment.comment}}. Date {{auctioncomment.date}} </li>
+    </ul>
+    {% empty %}
+    <span> No comments </span>
+    {% endfor %}
+
+   
+    <form action="{% url 'create_comment' auction.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form_comment}}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Save">
+    </form>
+  
+
+{% endblock %}

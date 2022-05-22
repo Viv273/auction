@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+
+    <ul>
+        {% for watchlist in watchlists %}
+
+            {% if watchlist.image %}
+                <div class="image">
+                    <img src="{{ MEDIA_URL }}{{watchlist.image.url}}" alt="image good" class="photo">
+                </div>
+            {% else %}
+                <br><br>
+                <span>No image</span>
+                <br><br>
+            {% endif %}
+
+        <li>Name good: {{watchlist.name_good}}</li>
+        <li>Description: {{watchlist.description}}</li>
+        <li>Price: {{watchlist.price}}</li>
+        <li>Categories: {{watchlist.categories}}</li>
+        <a href="{% url 'auction' watchlist.id %}"> go to </a>
+        
+        {% empty %}
+            <li> No auctions. </li>
+        {%endfor%}   
+    </ul>
+
+    
+
+   
+{% endblock %}
