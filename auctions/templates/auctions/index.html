@@ -5,8 +5,6 @@
 
     <div class="container-fluid">
         <div class="row">
-
-            
                 {% for auction in auctions %}
                     <div class="auction_container col-lg-3 col-sm-6">
                             {% if auction.image %}
@@ -18,18 +16,23 @@
                                 <span>No image</span>
                                 <br><br>
                             {% endif %}
-                        <ul>    
-                        <li>Name good: {{auction.name_good}}</li>
-                        <li>Description: {{auction.description}}</li>
-                        <li>Price: {{auction.price}}</li>
-                        <li>Categories: {{auction.categories}}</li>
-                        <a href="{% url 'auction' auction.id %}"> go to </a>
-                {% empty %}
-                        <li> No auctions. </li>
+                        <ul class="list">    
+                            <li><span class="list_name">Name good: </span>{{auction.name_good}}</li>
+                            <li><span class="list_name">Description: </span>{{auction.description}}</li>
+                            <li><span class="list_name">Price: </span>{{auction.price}} UAH</li>
+                            <li><span class="list_name">Categories: </span>{{auction.categories}}</li>
+                            <br>  
+                            <a class="btn btn-primary" href="{% url 'auction' auction.id %}"> go to </a>
                         </ul>
-                    </div>
-                {%endfor%}
-    </ul>
+                       
+                    </div>    
+                {% empty %}
+                        <span> No auctions. </span>
+                        
+                    
+                {%endfor%}    
+        </div>
+    </div>
 
    
 {% endblock %}

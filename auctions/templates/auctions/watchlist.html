@@ -3,30 +3,32 @@
 {% block body %}
     <h2>Watchlist</h2>
 
-    <ul>
-        {% for watchlist in watchlists %}
-
-            {% if watchlist.image %}
-                <div class="image">
-                    <img src="{{ MEDIA_URL }}{{watchlist.image.url}}" alt="image good" class="photo">
-                </div>
-            {% else %}
-                <br><br>
-                <span>No image</span>
-                <br><br>
-            {% endif %}
-
-        <li>Name good: {{watchlist.name_good}}</li>
-        <li>Description: {{watchlist.description}}</li>
-        <li>Price: {{watchlist.price}}</li>
-        <li>Categories: {{watchlist.categories}}</li>
-        <a href="{% url 'auction' watchlist.id %}"> go to </a>
-        
-        {% empty %}
-            <li> No auctions. </li>
-        {%endfor%}   
-    </ul>
-
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="list">
+                {% for watchlist in watchlists %}
+                    <div class="auction_container col-lg-3 col-sm-6">
+                        {% if watchlist.image %}
+                            <div class="image">
+                                <img src="{{ MEDIA_URL }}{{watchlist.image.url}}" alt="image good" class="photo">
+                            </div>
+                        {% else %}
+                            <br><br>
+                            <span>No image</span>
+                            <br><br>
+                        {% endif %}
+                    <li><span class="list_name">Name good: </span> {{watchlist.name_good}}</li>
+                    <li><span class="list_name">Description: </span> {{watchlist.description}}</li>
+                    <li><span class="list_name">Price: </span> {{watchlist.price}} UAH</li>
+                    <li><span class="list_name">Categories: </span> {{watchlist.categories}}</li>
+                    <a href="{% url 'auction' watchlist.id %}"> go to </a>
+                    </div>  
+                {% empty %}
+                    <li> No auctions. </li>
+                {%endfor%}   
+            </ul>
+        </div>
+    </div>
     
 
    

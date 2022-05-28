@@ -1,4 +1,5 @@
 from ast import If
+from tkinter.messagebox import NO
 from django.contrib.auth import authenticate, login, logout
 from django.core.checks import messages
 from django.contrib import messages
@@ -87,20 +88,25 @@ def auction(request, pk):
         form=False
         winner_bit=get_object_or_404(Bit, auction=auction, bit=bitmax)
         winner_user=winner_bit.user
-        if winner_user==request.user:
-            message_winner='Сongratulations! You are the winner of the auction!'
+        if request.user.is_authenticated:
+            if winner_user==request.user:
+                message_winner='Сongratulations! You are the winner of the auction!'
 
-    if Watchlist.objects.filter( user = request.user, item= auction).exists():
-        message='Remove from watchlist'
+    form_auction=AuctionForm()
+    if request.user.is_authenticated:
+        if Watchlist.objects.filter( user = request.user, item= auction).exists():
+            message='Remove from watchlist'
+        else:
+            message='Add to watchlist'
+        
+        if auction.user==request.user:
+            message_close='You can close the auction.'
+        else:
+            message_close=None
     else:
-        message='Add to watchlist'
-    
-    if auction.user==request.user:
-        form_auction=AuctionForm()
-        message_close='You can close the auction.'
-    else:
-        form_auction=AuctionForm()
+        message=None
         message_close=None
+        
 
     form_comment=CommentForm()
     
@@ -115,7 +121,7 @@ def auction(request, pk):
         "message_close": message_close, "bitmax": bitmax, "message_winner": message_winner, "form_comment":form_comment, "auctioncomments":auctioncomments
     })
 
-@login_required 
+@login_required(login_url='login')
 def create_auction(request):
     if request.method == 'POST':
             form = AuctionForm(request.POST, request.FILES)
@@ -131,7 +137,7 @@ def create_auction(request):
         'form': form
     })
 
-@login_required 
+@login_required(login_url='login')
 def add_watchlist(request, pk):
     watchlist_to_save=get_object_or_404(Auction,pk=pk)
     if Watchlist.objects.filter( user = request.user, item= watchlist_to_save).exists():
@@ -181,7 +187,7 @@ def add_watchlist(request, pk):
     #    'auctions':auct
     #})
 
-@login_required 
+@login_required(login_url='login')
 def watchlist(request):
     user = request.user
     #auctions = user.watchlists_author.only('watchlist').all()
@@ -205,7 +211,7 @@ def watchlist(request):
         'watchlists': watchlists
     })
 
-@login_required
+@login_required(login_url='login')
 def add_bit(request, pk):
     auction=Auction.objects.get(pk=pk)
     if Watchlist.objects.filter( user = request.user, item= auction).exists():
@@ -260,7 +266,7 @@ def add_bit(request, pk):
         'form': form, 'pk': pk, 'auction': auction, 'message': message
     })
             
-@login_required
+@login_required(login_url='login')
 def auction_close(request, pk):
     auction=Auction.objects.get(pk=pk)  
     if request.method == 'POST':
@@ -270,7 +276,7 @@ def auction_close(request, pk):
             auction.save()
             return HttpResponseRedirect(reverse("auction", args=(pk,)))
 
-@login_required
+@login_required(login_url='login')
 def create_comment(request, pk):
     auction=Auction.objects.get(pk=pk)
     if request.method == 'POST':
