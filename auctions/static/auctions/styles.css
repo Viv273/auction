@@ -1,13 +1,55 @@
 body {
-    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #E5E5E5;
+    padding: 20px;
+}
+
+ul {
+	padding: 0;
+    margin-top: 10px;
+}
+
+ul li {
+	list-style-type: none;
+}
+
+
+.list li {
+    overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.list_name {
+    font-weight: bold
+}
+
+.image {
+    height: 40vh; 
+    margin: 2px;  
+}
+
+.image_auction {
+    height: 50vh;
 }
 
 .photo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     height: 100%;
     width: auto;
 }
 
-.image {
-    height: 40vh;
-    
+.auction_container {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    margin: 5px auto;
+    box-sizing: border-box;
+}
+
+.left-side {
+    text-align: center;
 }

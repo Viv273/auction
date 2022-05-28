@@ -3,25 +3,32 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    <ul>
-        {% for auction in auctions %}
-            {% if auction.image %}
-            <div class="image">
-                <img src="{{ MEDIA_URL }}{{auction.image.url}}" alt="image good" class="photo">
-            </div>
-            {% else %}
-            <br><br>
-            <span>No image</span>
-            <br><br>
-            {% endif %}
-        <li>Name good: {{auction.name_good}}</li>
-        <li>Description: {{auction.description}}</li>
-        <li>Price: {{auction.price}}</li>
-        <li>Categories: {{auction.categories}}</li>
-        <a href="{% url 'auction' auction.id %}"> go to </a>
-        {% empty %}
-            <li> No auctions. </li>
-        {%endfor%}
+    <div class="container-fluid">
+        <div class="row">
+
+            
+                {% for auction in auctions %}
+                    <div class="auction_container col-lg-3 col-sm-6">
+                            {% if auction.image %}
+                                <div class="image">
+                                    <img src="{{ MEDIA_URL }}{{auction.image.url}}" alt="image good" class="photo">
+                                </div>
+                            {% else %}
+                                <br><br>
+                                <span>No image</span>
+                                <br><br>
+                            {% endif %}
+                        <ul>    
+                        <li>Name good: {{auction.name_good}}</li>
+                        <li>Description: {{auction.description}}</li>
+                        <li>Price: {{auction.price}}</li>
+                        <li>Categories: {{auction.categories}}</li>
+                        <a href="{% url 'auction' auction.id %}"> go to </a>
+                {% empty %}
+                        <li> No auctions. </li>
+                        </ul>
+                    </div>
+                {%endfor%}
     </ul>
 
    
