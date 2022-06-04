@@ -115,7 +115,6 @@ def auction(request, pk):
     except:
         auctioncomments=None
 
-#print(f'comment {comment.comment}')
     return render(request, 'auctions/auction.html', {
         "auction":auction, "message":message, "form": form, "form_auction": form_auction,
         "message_close": message_close, "bitmax": bitmax, "message_winner": message_winner, "form_comment":form_comment, "auctioncomments":auctioncomments
@@ -141,12 +140,7 @@ def create_auction(request):
 def add_watchlist(request, pk):
     watchlist_to_save=get_object_or_404(Auction,pk=pk)
     if Watchlist.objects.filter( user = request.user, item= watchlist_to_save).exists():
-        #user_list, created=Watchlist.objects.filter(user = request.user)
-        #user_list.watchlist.delate(watchlist_to_save)
 
-        # watchlist_auction=Watchlist.objects.filter(user = request.user).only('item').all()
-        # watchlist_auction=watchlist_auction.filter(item= watchlist_to_save)
-        # watchlist_auction.delete()
         user = request.user
         watchlist=Watchlist.objects.get(user = user)
         watchlist.item.remove(watchlist_to_save)
@@ -155,17 +149,13 @@ def add_watchlist(request, pk):
             watchlists=watchlist.item.all()
         except Watchlist.DoesNotExist:
             watchlists= None
-        # return HttpResponseRedirect(reverse('index'))
         
         return render(request, "auctions/watchlist.html", {
             'watchlists': watchlists
         })
     user_list, created=Watchlist.objects.get_or_create(user = request.user)
     user_list.item.add(watchlist_to_save)
-    #watchlist_filter=Watchlist.objects.filter(user = request.user)
     user = request.user
-    #auctions=user.watchlists_author.all()
-    #auctions = Watchlist.objects.filter(user = request.user).only('watchlist').all()
     try:
         watchlist=Watchlist.objects.get(user = user)
         watchlists=watchlist.item.all()
@@ -176,37 +166,16 @@ def add_watchlist(request, pk):
         'watchlists': watchlists
     })
 
-    #user = request.user
-    #watchlist=Watchlist.objects.first()
-    #user_id=int(request.user)
-    #user=Watchlist.objects.get(pk=user_id)
-    #watchlist.user.add(user)
-    #watchlist.watchlist.add(auction)
-    #auct=Watchlist.objects.filter(user=user)
-    #return render(request, 'auctions/watchlist.html', {
-    #    'auctions':auct
-    #})
 
 @login_required(login_url='login')
 def watchlist(request):
     user = request.user
-    #auctions = user.watchlists_author.only('watchlist').all()
-    #watchl=Watchlist.objects.all().filter(user = user)
-    #watchlists=watchl.only('watchlist')
-    # watchlist=Watchlist.objects.get(user = user)
     try:
         watchlist=Watchlist.objects.get(user = user)
         watchlists=watchlist.item.all()
     except Watchlist.DoesNotExist:
         watchlists= None
-    # auctions=Auction.objects.values()
-    #delwatchlist=Watchlist.objects.filter(user = user).values()
-    # delwatchlist=Watchlist.objects.values()
-    # item=Watchlist.objects.prefetch_related('item__auction') (Cannot find 'auction' on Auction object, 'item__auction' is an invalid parameter to prefetch_related())
-    # print(f"delwatclist={delwatchlist}")
-    # print(f"auctions={auctions}")
-    #print(f"item={item}")
-    
+ 
     return render(request, "auctions/watchlist.html", {
         'watchlists': watchlists
     })

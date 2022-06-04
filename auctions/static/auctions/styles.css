@@ -33,6 +33,21 @@ ul li {
     height: 50vh;
 }
 
+@media (max-width: 767px){
+    .image_auction{
+        height: 40vh;
+    }
+
+    .image{
+        height: 30vh;
+    }
+    
+    .body{
+        font-size:16px;
+    }
+
+} 
+
 .photo {
     display: block;
     margin-left: auto;

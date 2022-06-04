@@ -21,7 +21,7 @@
                     <li><span class="list_name">Description: </span> {{watchlist.description}}</li>
                     <li><span class="list_name">Price: </span> {{watchlist.price}} UAH</li>
                     <li><span class="list_name">Categories: </span> {{watchlist.categories}}</li>
-                    <a href="{% url 'auction' watchlist.id %}"> go to </a>
+                    <a class="btn btn-primary" href="{% url 'auction' watchlist.id %}"> go to </a>
                     </div>  
                 {% empty %}
                     <li> No auctions. </li>

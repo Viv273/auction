@@ -4,7 +4,7 @@
 <h2>Auction {{auction.id}}</h2>
 <div class="container-fluid">
     <div class="row">
-        <div class="left-side col-lg-5 col-sm-6">
+        <div class="left-side col-lg-5 col-sm-12">
             
             {% if auction.image %}
                 <div class="image_auction">
@@ -20,12 +20,12 @@
             <a class="btn btn-primary" href="{% url 'add_watchlist' auction.id %}"> {{message}} </a>
             {% endif%}
             <br>
-            
-            
+            <br>
+             
         </div>
 
     
-        <div class="right-side col-lg-7 col-sm-6">
+        <div class="right-side col-lg-7 col-sm-12">
             
             <ul>
                 <li><span class="list_name">Name good: </span> {{auction.name_good}}</li>
@@ -62,6 +62,8 @@
                 </div>
                 <input class="btn btn-primary" type="submit" value="Save">
             </form>
+            <br>
+            <br>
             {% endif %}
         </div>
     </div>
